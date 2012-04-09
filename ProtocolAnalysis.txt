@@ -1,0 +1,19 @@
+REFERENCE
+variable list: http://www.webanalyticsindia.net/blog/2009/02/google-analytics-variable-list/
+domain hash = http://stackoverflow.com/questions/4821627/building-a-google-analytics-domain-hash
+utmz infi = https://groups.google.com/d/topic/analytics-help-basics/ux2jOUrN4To/discussion
+talk about what are the different parameters = https://groups.google.com/d/topic/analytics-help-tracking/_JHw8LBHwz4/discussion
+COMMON
+
+utmwv = protocol version (google 4.4ma, jgoogleanalytics 4.7.2, ga.js 4.9.4)
+utmn = random to prevent caching
+utmcs = encoding (google hardcoded utf-8, jgoogle from system properties)
+utmsr = screen size
+utmul = locale
+utmac = accountId = UA-XXXXXXXX-X
+utmcc = escaped cookie string (check its own section)
+
+PAGEVIEW
+
+utmp = pagepath
+
