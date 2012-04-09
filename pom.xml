@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.dmurph</groupId>
 	<artifactId>JGoogleAnalyticsTracker</artifactId>
-	<version>1.2.1-GEMSERK-2-SNAPSHOT</version>
+	<version>1.2.2-SNAPSHOT</version>
 	<name>JGoogleAnalyticsTracker</name>
 	<description>A java library for sending google analytics tracking information.</description>
 	<url>http://github.com/dmurph/JGoogleAnalyticsTracker</url>
@@ -18,9 +18,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://github.com/gemserk/jgoogleanalyticstracker.git</url>
-		<connection>scm:git://github.com/gemserk/jgoogleanalyticstracker.git</connection>
-		<developerConnection>scm:git:git@github.com:gemserk/jgoogleanalyticstracker.git</developerConnection>
+		<url>https://github.com/urish/jgoogleanalyticstracker.git</url>
+		<connection>scm:git://github.com/urish/jgoogleanalyticstracker.git</connection>
+		<developerConnection>scm:git:git@github.com:urish/jgoogleanalyticstracker.git</developerConnection>
 	</scm>
 	<distributionManagement>
 		<repository>
