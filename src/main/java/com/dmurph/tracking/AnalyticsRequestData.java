@@ -68,7 +68,7 @@ public class AnalyticsRequestData {
 	private String utmctr = null;
 	private String utmcmd = "(none)";
 	private String utmcct = null;
-	
+
 	public void setReferrer(String argSite, String argPage){
 		utmcmd = "referral";
 		utmcct = argPage;
@@ -162,6 +162,42 @@ public class AnalyticsRequestData {
 	public String getPageURL() {
 		return pageURL;
 	}
+	
+	/**
+	 * Sets the utm_source query variable value
+	 */
+	public void setSource(String utmcsr) {
+		this.utmcsr = utmcsr;
+	}
+	
+	/**
+	 * Sets the utm_campaign query variable value
+	 */
+	public void setCampaign(String utmccn) {
+		this.utmccn = utmccn;
+	}
+
+	/**
+	 * Sets the utm_medium query variable value
+	 */
+	public void setMedium(String utmcmd) {
+		this.utmcmd = utmcmd;
+	}
+	
+	/**
+	 * Sets the utm_term query variable value
+	 */
+	public void setTerm(String utmctr) {
+		this.utmctr = utmctr;
+	}
+	
+	/**
+	 * Sets the utm_content query variable value
+	 */
+	public void setContent(String utmcct) {
+		this.utmcct = utmcct;
+	}
+	
 	/**
 	 * Sets the event action, which is required for
 	 * tracking events.

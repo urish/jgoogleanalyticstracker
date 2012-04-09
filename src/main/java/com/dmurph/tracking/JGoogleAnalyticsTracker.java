@@ -31,7 +31,9 @@ import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.net.SocketAddress;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.MatchResult;
 
@@ -108,11 +110,12 @@ public class JGoogleAnalyticsTracker {
         V_4_7_2
     }
 
-    private GoogleAnalyticsVersion gaVersion;
-    private AnalyticsConfigData configData;
+    private final GoogleAnalyticsVersion gaVersion;
+    private final AnalyticsConfigData configData;
     private IGoogleAnalyticsURLBuilder builder;
     private DispatchMode mode;
     private boolean enabled;
+	private final List<AnalyticsRequestFilter> requestFilters = new ArrayList<AnalyticsRequestFilter>();
 
     public JGoogleAnalyticsTracker(AnalyticsConfigData argConfigData, GoogleAnalyticsVersion argVersion) {
        this(argConfigData, argVersion, DispatchMode.SINGLE_THREAD);
@@ -418,13 +421,20 @@ public class JGoogleAnalyticsTracker {
         if (builder == null) {
             throw new NullPointerException("Class was not initialized");
         }
+        for (AnalyticsRequestFilter filter: requestFilters ) {
+        	if (!filter.filterRequest(argData)) {
+                logger.debug("Request filter " + filter + " returned false, dropping tracking request.");
+                return;
+        	}
+        }
         final String url = builder.buildURL(argData);
         final String userAgent = configData.getUserAgent();
 
         switch(mode){
         	case MULTI_THREAD:
         		Thread t = new Thread(asyncThreadGroup, "AnalyticsThread-" + asyncThreadGroup.activeCount()) {
-                    public void run() {
+                    @Override
+					public void run() {
                         synchronized (JGoogleAnalyticsTracker.class) {
                             asyncThreadsRunning++;
                         }
@@ -455,6 +465,14 @@ public class JGoogleAnalyticsTracker {
         }
     }
     
+    public void addRequestFilter(AnalyticsRequestFilter requestFilter) {
+    	requestFilters.add(requestFilter);
+    }
+
+    public void removeRequestFilter(AnalyticsRequestFilter requestFilter) {
+    	requestFilters.remove(requestFilter);
+    }
+
     private static void dispatchRequest(String argURL, String userAgent) {
         try {
             URL url = new URL(argURL);
@@ -494,7 +512,8 @@ public class JGoogleAnalyticsTracker {
         if (backgroundThread == null) {
             backgroundThreadMayRun = true;
             backgroundThread = new Thread(asyncThreadGroup, "AnalyticsBackgroundThread") {
-                public void run() {
+                @Override
+				public void run() {
                     logger.debug("AnalyticsBackgroundThread started");
                     while (backgroundThreadMayRun) {
                         try {
